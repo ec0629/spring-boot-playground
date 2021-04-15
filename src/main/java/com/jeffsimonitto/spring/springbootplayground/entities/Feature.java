@@ -1,7 +1,5 @@
 package com.jeffsimonitto.spring.springbootplayground.entities;
 
-import java.util.Locale;
-
 public enum Feature {
     SEEDSTARTER_SPECIFIC_SUBSTRATE("SEEDSTARTER_SPECIFIC_SUBSTRATE"),
     FERTILIZER("FERTILIZER"),
