@@ -2,11 +2,131 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Spring Seed Starter Manager</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css"
+        th:href="@{/css/style.css}">
 </head>
 <body>
 
-<div th:text="'Goodbye!'">Hello!</div>
+<div>
+    <img src="../static/img/stsmlogo.png" alt="STSM logo" title="STSM logo"
+        th:src="@{/img/stsmlogo.png}">
+</div>
+
+<div class="seedstarterlist">
+    <h2>List of Seed Starters</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Date Planted</th>
+            <th>Covered</th>
+            <th>Type</th>
+            <th>Features</th>
+            <th>Rows</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>13/01/2011</td>
+            <td>yes</td>
+            <td>Wireframe</td>
+            <td>Electric Heating, Turf</td>
+            <td>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Thymus Thmi</td>
+                        <td>12</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h2>Add new Seed Starter</h2>
+
+    <form action="#" method="post">
+        <fieldset>
+            <legend>Seed Starter Data</legend>
+
+            <ul class="errorlist">
+                <li>Input is incorrect</li>
+            </ul>
+
+            <div>
+                <label for="datePlanted">
+                    <span>Date planted</span>
+                    (<span>YYYY/MM/DD</span>)
+                </label>
+                <input type="text">
+            </div>
+            <div>
+                <label>Covered</label>
+                <input type="checkbox">
+            </div>
+            <div>
+                <label for="type">Type</label>
+                <select>
+                    <option>Wireframe</option>
+                </select>
+            </div>
+            <div>
+                <label>Features</label>
+                <ul>
+                    <li>
+                        <input type="checkbox">
+                        <label>Electric Heating</label>
+                    </li>
+                    <li>
+                        <input id="removed1" name="removed1" type="checkbox"> <label for="removed1">Turf</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <label>Rows</label>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Row</th>
+                        <th>Variety</th>
+                        <th>Seeds per cell</th>
+                        <th>
+                            <button type="submit" name="addRow">Add row</button>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <select>
+                                <option>Thymus Thymi</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text">
+                        </td>
+                        <td>
+                            <button type="submit" value="1" name="removeRow">Remove row</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="submit">
+                <button type="submit" name="save">Add Seed Starter</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
 
 </body>
 </html>
