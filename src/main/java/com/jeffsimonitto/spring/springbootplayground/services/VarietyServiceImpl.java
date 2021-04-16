@@ -2,18 +2,16 @@ package com.jeffsimonitto.spring.springbootplayground.services;
 
 import com.jeffsimonitto.spring.springbootplayground.entities.Variety;
 import com.jeffsimonitto.spring.springbootplayground.repositories.VarietyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class VarietyServiceImpl implements VarietyService {
-    @Autowired
-    private VarietyRepository varietyRepository;
+    private final VarietyRepository varietyRepository;
 
-    public VarietyServiceImpl() {
-        super();
+    public VarietyServiceImpl(VarietyRepository varietyRepository) {
+        this.varietyRepository = varietyRepository;
     }
 
     @Override

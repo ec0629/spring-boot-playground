@@ -3,7 +3,6 @@ package com.jeffsimonitto.spring.springbootplayground.controllers;
 import com.jeffsimonitto.spring.springbootplayground.entities.*;
 import com.jeffsimonitto.spring.springbootplayground.services.SeedStarterService;
 import com.jeffsimonitto.spring.springbootplayground.services.VarietyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -14,13 +13,14 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class Home {
+public class HomeController {
+    private final VarietyService varietyService;
+    private final SeedStarterService seedStarterService;
 
-    @Autowired
-    private VarietyService varietyService;
-
-    @Autowired
-    private SeedStarterService seedStarterService;
+    public HomeController(VarietyService varietyService, SeedStarterService seedStarterService) {
+        this.varietyService = varietyService;
+        this.seedStarterService = seedStarterService;
+    }
 
     @ModelAttribute("allTypes")
     public List<Type> populateTypes() {
@@ -43,7 +43,7 @@ public class Home {
     }
 
     @GetMapping
-    public String index() {
+    public String index(final SeedStarter seedStarter) {
         return "index";
     }
 
