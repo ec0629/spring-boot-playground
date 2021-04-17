@@ -9,12 +9,8 @@ import java.text.ParseException;
 import java.util.Locale;
 
 public class VarietyFormatter implements Formatter<Variety> {
-    private VarietyService varietyService;
-
     @Autowired
-    public void setVarietyService(VarietyService varietyService) {
-        this.varietyService = varietyService;
-    }
+    private VarietyService varietyService;
 
     @Override
     public Variety parse(String text, Locale locale) throws ParseException {
