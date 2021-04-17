@@ -4,7 +4,6 @@ import com.jeffsimonitto.spring.springbootplayground.entities.*;
 import com.jeffsimonitto.spring.springbootplayground.services.SeedStarterService;
 import com.jeffsimonitto.spring.springbootplayground.services.VarietyService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,18 +41,22 @@ public class HomeController {
         return this.seedStarterService.findAll();
     }
 
+    @ModelAttribute("seedStarter")
+    public SeedStarter initSeedStarter() {
+        return new SeedStarter();
+    }
+
     @GetMapping
-    public String index(final SeedStarter seedStarter) {
+    public String index() {
         return "index";
     }
 
     @PostMapping(params = {"save"})
-    public String saveSeedStarter(final SeedStarter seedStarter, final BindingResult bindingResult, final ModelMap model) {
+    public String saveSeedStarter(final SeedStarter seedStarter, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "index";
         }
         this.seedStarterService.add(seedStarter);
-        model.clear();
         return "redirect:/";
     }
 
