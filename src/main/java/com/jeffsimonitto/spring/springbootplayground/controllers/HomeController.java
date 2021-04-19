@@ -4,11 +4,14 @@ import com.jeffsimonitto.spring.springbootplayground.entities.*;
 import com.jeffsimonitto.spring.springbootplayground.services.SeedStarterService;
 import com.jeffsimonitto.spring.springbootplayground.services.VarietyService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -21,39 +24,26 @@ public class HomeController {
         this.seedStarterService = seedStarterService;
     }
 
-    @ModelAttribute("allTypes")
-    public List<Type> populateTypes() {
-        return Arrays.asList(Type.ALL);
-    }
-
-    @ModelAttribute("allFeatures")
-    public List<Feature> populateFeatures() {
-        return Arrays.asList(Feature.ALL);
-    }
-
-    @ModelAttribute("allVarieties")
-    public List<Variety> populateVarieties() {
-        return this.varietyService.findAll();
-    }
-
-    @ModelAttribute("allSeedStarters")
-    public List<SeedStarter> populateSeedStarters() {
-        return this.seedStarterService.findAll();
-    }
-
-    @ModelAttribute("seedStarter")
-    public SeedStarter initSeedStarter() {
-        return new SeedStarter();
+    private Map<String, Object> populateModel() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("allTypes", Arrays.asList(Type.ALL));
+        map.put("allFeatures", Arrays.asList(Feature.ALL));
+        map.put("allVarieties", this.varietyService.findAll());
+        map.put("allSeedStarters", this.seedStarterService.findAll());
+        return map;
     }
 
     @GetMapping
-    public String index() {
+    public String index(Model model, SeedStarter seedStarter) {
+        model.addAllAttributes(populateModel());
+        model.addAttribute("seedStarter", seedStarter);
         return "index";
     }
 
     @PostMapping(params = {"save"})
-    public String saveSeedStarter(final SeedStarter seedStarter, final BindingResult bindingResult) {
+    public String saveSeedStarter(Model model, SeedStarter seedStarter, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            model.addAllAttributes(populateModel());
             return "index";
         }
         this.seedStarterService.add(seedStarter);
@@ -61,14 +51,18 @@ public class HomeController {
     }
 
     @PostMapping(params = {"addRow"})
-    public String addRow(final SeedStarter seedStarter) {
+    public String addRow(SeedStarter seedStarter, RedirectAttributes attributes) {
         seedStarter.getRows().add(new Row());
-        return "index";
+        attributes.addFlashAttribute("seedStarter", seedStarter);
+        return "redirect:/";
     }
 
     @PostMapping
-    public String removeRow(@RequestParam("removeRow") final int rowId, final SeedStarter seedStarter) {
+    public String removeRow(@RequestParam("removeRow") int rowId,
+                            SeedStarter seedStarter,
+                            RedirectAttributes attributes) {
         seedStarter.getRows().remove(rowId);
-        return "index";
+        attributes.addFlashAttribute("seedStarter", seedStarter);
+        return "redirect:/";
     }
 }
