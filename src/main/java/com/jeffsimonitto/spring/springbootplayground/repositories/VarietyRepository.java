@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface VarietyRepository {
     List<Variety> findAll();
-    Variety findById(Integer id);
+    Variety findById(int id);
 }

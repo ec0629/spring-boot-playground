@@ -1,29 +1,39 @@
 package com.jeffsimonitto.spring.springbootplayground.entities;
 
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class SeedStarter {
-
-    private Integer id = null;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @NotNull(message = "Date planted is required")
     private Date datePlanted = null;
     private Boolean covered = null;
+    @Enumerated(EnumType.STRING)
     private Type type = Type.PLASTIC;
-    private Feature[] features = null;
-
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    private List<Feature> features = null;
+    @OneToMany
+    // by including @JoinColumn we override the default join table implementation
+    @JoinColumn(name = "seed_starter_id")
+    @Valid
     private List<Row> rows = new ArrayList<>();
 
     public SeedStarter() {
-        super();
     }
 
-    public Integer getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(final Integer id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -51,27 +61,15 @@ public class SeedStarter {
         this.type = type;
     }
 
-    public Feature[] getFeatures() {
+    public List<Feature> getFeatures() {
         return features;
     }
 
-    public void setFeatures(final Feature[] features) {
+    public void setFeatures(final List<Feature> features) {
         this.features = features;
     }
 
     public List<Row> getRows() {
         return rows;
-    }
-
-    @Override
-    public String toString() {
-        return "SeedStarter [" +
-                "id=" + id +
-                ", datePlanted=" + datePlanted +
-                ", covered=" + covered +
-                ", type=" + type +
-                ", features=" + Arrays.toString(features) +
-                ", rows=" + rows +
-                ']';
     }
 }

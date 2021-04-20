@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class HomeController {
     }
 
     @PostMapping(params = {"save"})
-    public String saveSeedStarter(Model model, SeedStarter seedStarter, BindingResult bindingResult) {
+    public String saveSeedStarter(Model model, @Valid SeedStarter seedStarter, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAllAttributes(populateModel());
             return "index";

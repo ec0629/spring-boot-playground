@@ -49,7 +49,7 @@ public class VarietyRepositoryImpl implements VarietyRepository {
     }
 
     @Override
-    public Variety findById(final Integer id) {
+    public Variety findById(final int id) {
         return this.varietiesById.get(id);
     }
 }
