@@ -15,12 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/")
-public class HomeController {
+@RequestMapping("/seedstartermng")
+public class SeedStarterManagerController {
     private final VarietyService varietyService;
     private final SeedStarterService seedStarterService;
 
-    public HomeController(VarietyService varietyService, SeedStarterService seedStarterService) {
+    public SeedStarterManagerController(VarietyService varietyService, SeedStarterService seedStarterService) {
         this.varietyService = varietyService;
         this.seedStarterService = seedStarterService;
     }
@@ -38,24 +38,24 @@ public class HomeController {
     public String index(Model model, SeedStarter seedStarter) {
         model.addAllAttributes(populateModel());
         model.addAttribute("seedStarter", seedStarter);
-        return "index";
+        return "seedstartermng";
     }
 
     @PostMapping(params = {"save"})
     public String saveSeedStarter(Model model, @Valid SeedStarter seedStarter, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAllAttributes(populateModel());
-            return "index";
+            return "seedstartermng";
         }
         this.seedStarterService.add(seedStarter);
-        return "redirect:/";
+        return "redirect:/seedstartermng";
     }
 
     @PostMapping(params = {"addRow"})
     public String addRow(SeedStarter seedStarter, RedirectAttributes attributes) {
         seedStarter.getRows().add(new Row());
         attributes.addFlashAttribute("seedStarter", seedStarter);
-        return "redirect:/";
+        return "redirect:/seedstartermng";
     }
 
     @PostMapping
@@ -64,6 +64,6 @@ public class HomeController {
                             RedirectAttributes attributes) {
         seedStarter.getRows().remove(rowId);
         attributes.addFlashAttribute("seedStarter", seedStarter);
-        return "redirect:/";
+        return "redirect:/seedstartermng";
     }
 }
