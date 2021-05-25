@@ -11,6 +11,7 @@ public class Variety {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @NotBlank
     private String name = null;
 

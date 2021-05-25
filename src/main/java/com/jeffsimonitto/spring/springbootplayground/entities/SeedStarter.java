@@ -12,16 +12,21 @@ public class SeedStarter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @NotNull(message = "Date planted is required")
     private Date datePlanted = null;
+
     private Boolean covered = null;
+
     @Enumerated(EnumType.STRING)
     private Type type = Type.PLASTIC;
+
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private List<Feature> features = null;
-    @OneToMany
+
     // by including @JoinColumn we override the default join table implementation
+    @OneToMany
     @JoinColumn(name = "seed_starter_id")
     @Valid
     private List<Row> rows = new ArrayList<>();
